@@ -25,3 +25,6 @@ It has 60,000 examples in the dataset, 10,000 are for training.
 http://yann.lecun.com/exdb/mnist
 
 https://www.youtube.com/watch?v=T1nFQ49TyeA&list=PLtP6Tqjv3rMsmdY1Z1rC_XtCTpoRgfbMo
+
+
+## RubyFann example
