@@ -15,30 +15,38 @@ keywords = ['do', 'if', 'in', 'for', 'new', 'try', 'var', 'case', 'else', 'enum'
             'while', 'yield', 'delete', 'export', 'import', 'public', 'return', 'static', 'switch', 'typeof', 'default', 'extends', 'finally', 'package', 'private', 'continue', 
             'debugger', 'function', 'arguments', 'interface', 'protected', 'implements', 'instanceof'];
 fs = require('fs');  // file system
-var stringify = require('csv-stringify');
-data = fileread("00BAD3437C94E65766C9D944751CA034.js");
+jsTokens = require("js-tokens").default
+stringify = require('csv-stringify');
 
 file_names = []
-fs.readdirSync('cdm_js/REQ11197-1441017585').forEach(file => {
+// cdm_js/REQ11197-1441017585
+fs.readdirSync('samples').forEach(file => {
     file_names.push(file);
 })
 
 console.log(file_names)
+data = fileread('samples/' + file_names[0]);
 
-jsTokens = require("js-tokens").default
 tokens = data.toString().match(jsTokens)
 filtered_tokens = tokens.filter(function(token) { 
   return token.length > 2 && !keywords.includes(token);
 });
+
 filtered_tokens = filtered_tokens.filter(n => n.trim());
 var counts = {};
+
 for (var i = 0; i < filtered_tokens.length; i++) {
 	var token = filtered_tokens[i];
 	counts[token] = counts[token] ? counts[token] + 1 :1;
 }
 
+rows = []
+for(i = 0; i < Object.keys(counts).length; i++) {
+    rows.push([Object.keys(counts)[i], counts[Object.keys(counts)[i]].toString()])
+}
+
 let csvObj = {
-	'rows': [Object.keys(counts), Object.keys(counts).map((k) => counts[k].toString())]
+    'rows': rows
 }
 
 stringify(csvObj.rows, function(error, output){
