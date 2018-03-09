@@ -1,2 +1,5 @@
 .idea
 Gemfile.lock
+node_modules
+package-lock.json
+iris.pdf
